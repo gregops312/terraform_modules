@@ -1,0 +1,54 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+
+jobs:
+  setup:
+    outputs:
+      terraform_version: ${{ steps.terraform_version.outputs.terraform_version }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get terraform version
+        id: terraform_version
+        run: echo "terraform_version=$(cat .terraform-version)" >> $GITHUB_OUTPUT
+
+      - name: Setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ steps.terraform_version.outputs.terraform_version }}
+
+  fmt:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ needs.setup.outputs.terraform_version }}
+
+      - name: Format
+        id: fmt
+        run: make lint
+
+  validate:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ needs.setup.outputs.terraform_version }}
