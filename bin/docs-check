@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# tfdoc: Uses builds a list of modules and uses terraform-docs to make README.md
+#
+# Usage: tf-docs-check
+#
+#   Checks for terraform-docs, builds list of modules to document, uses terraform-docs to document modules
+
+set -euo pipefail
+
+if ! command -v terraform-docs &> /dev/null;  then
+  echo "terraform-docs is missing from path"
+  echo "brew install terraform-docs https://github.com/terraform-docs/terraform-docs"
+  exit 1
+fi
+
+mapfile -t DIR_PATHS < <(find aws -type f -name '*.tf' -print0 | xargs -0 -n 1 dirname | sort -u)
+
+for i in "${DIR_PATHS[@]}"; do
+  terraform-docs markdown table "${i}" -c .terraform-docs.yaml --output-check
+done
