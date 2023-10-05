@@ -25,6 +25,37 @@ jobs:
         with:
           terraform_version: ${{ steps.terraform_version.outputs.terraform_version }}
 
+  docs:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ needs.setup.outputs.terraform_version }}
+
+      - name: Install dependency
+        run: |
+          curl -sSL https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz -o "${HOME}/terraform-docs.tar.gz"
+          tar -xzf "${HOME}/terraform-docs.tar.gz" -C "${HOME}"
+          chmod +x "${HOME}/terraform-docs"
+          echo "$HOME" >> $GITHUB_PATH
+    
+      - name: Docs
+        run: |
+          make docs-check
+          if [[ $(git --no-pager diff --name-only aws/) ]]; then
+            echo "Documentation not up to date, please run 'make docs-update' and commit your changes"
+            echo
+            echo "################################"
+            echo "The following changes were found"
+            git --no-pager diff --name-only aws/
+            exit 1
+          fi
+
   fmt:
     needs: setup
     runs-on: ubuntu-latest
