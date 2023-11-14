@@ -35,7 +35,7 @@ validate:
 	if [[ ! -z "${CI}" ]]; then \
 		export DIRS=$$(find aws -type f -name '*.tf' -print0 | xargs -0 -n 1 dirname | sort -u) ;\
 	else \
-		export DIRS=$$(comm -12 <(find aws -type f -name '*.tf' -print0 | xargs -0 -n 1 dirname | sort -u) <(git diff-index --name-only HEAD -- | gxargs -d '\n' -n 1 dirname | sort -u)) ;\
+		export DIRS=$$(comm -12 <(find aws -type f -name '*.tf' -print0 | xargs -0 -n 1 dirname | sort -u) <(git diff-index --name-only HEAD -- | xargs -n 1 dirname | sort -u)) ;\
 	fi ;\
 	for i in $${DIRS}; do \
 		echo "$${i}" ;\
