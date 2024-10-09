@@ -1,3 +1,17 @@
+locals {
+  default_policies = [
+    {
+      description = "Default logging policy"
+      name        = "${var.name}-default-logging"
+      policy_json = data.aws_iam_policy_document.default_logging.json
+    }
+  ]
+  policies = { for i in concat(local.default_policies, var.policies) : i["name"] => i }
+}
+
+##
+## Required Variables
+##
 variable "filename" {
   description = "Path to the function's deployment package within the local filesystem"
   type        = string
@@ -20,7 +34,7 @@ variable "tags" {
 }
 
 ##
-## Defaults
+## Default Variables
 ##
 variable "cloudwatch" {
   default     = {}
