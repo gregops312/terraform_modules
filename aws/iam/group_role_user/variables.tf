@@ -1,3 +1,6 @@
+##
+## Required Variables
+##
 variable "name" {
   description = "Friendly name of the [group, role, user]."
   type        = string
@@ -18,7 +21,7 @@ variable "type" {
 }
 
 ##
-## Default
+## Default Variables
 ##
 variable "role" {
   default     = null

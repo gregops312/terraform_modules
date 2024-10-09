@@ -60,3 +60,11 @@ locals {
   ### END ###
   ### ECS TASK SIZE CALCULATOR ###
 }
+
+##
+## Required Variables
+##
+variable "container_definitions" {
+  description = "A valid string JSON of container definitions."
+  type        = string
+}
