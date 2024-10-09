@@ -35,7 +35,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_name"></a> [name](#input\_name) | Friendly name of the [group, role, user]. | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Key-value mapping of tags for the IAM [group, role, user]. | `map(any)` | n/a | yes |
-| <a name="input_type"></a> [type](#input\_type) | n/a | `string` | n/a | yes |
+| <a name="input_type"></a> [type](#input\_type) | The type of the resource to implement | `string` | n/a | yes |
 | <a name="input_path"></a> [path](#input\_path) | Path to the role | `string` | `null` | no |
 | <a name="input_policies"></a> [policies](#input\_policies) | Policy objects that replace and streamline the downsides to inline policies. | <pre>list(object({<br/>    description = string<br/>    name        = string<br/>    policy      = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_policy_attachments"></a> [policy\_attachments](#input\_policy\_attachments) | A list of polcy ARNs to attach to [group, role, user]. | `list(string)` | `[]` | no |

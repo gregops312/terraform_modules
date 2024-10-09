@@ -31,11 +31,6 @@ variable "cloudwatch" {
   })
 }
 
-variable "environment" {
-  default     = null
-  description = "Environment variables config"
-}
-
 variable "handler" {
   default     = "lambda_handler"
   description = "Function entrypoint in your code"
@@ -62,11 +57,6 @@ variable "timeout" {
   default     = 30
   description = "Time in seconds until function stopped"
   type        = number
-}
-
-variable "vpc_config" {
-  default     = null
-  description = "For network connectivity to AWS resources in a VPC, specify a list of security groups and subnets in the VPC."
 }
 
 ##
