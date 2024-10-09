@@ -1,5 +1,5 @@
 SHELL := /usr/bin/env bash
-default: docs-update fmt validate
+default: docs-update fmt lint validate
 
 .PHONY: clean
 clean:
@@ -14,18 +14,29 @@ docs-update:
 	@echo "##" ;\
 	echo "## Docs Update" ;\
 	echo "##" ;\
-	./bin/docs-update
+	./bin/docs-update && \
+	echo
 
 .PHONY: fmt
 fmt:
 	@echo "##" ;\
 	echo "## Format" ;\
 	echo "##" ;\
-	terraform fmt -recursive ./
+	terraform fmt -recursive ./ && \
+	echo
+
+.PHONY: fmt-check
+fmt-check:
+	terraform fmt -check -recursive ./
 
 .PHONY: lint
 lint:
-	terraform fmt -check -recursive ./
+	@echo "##" ;\
+	echo "## Lint" ;\
+	echo "##" ;\
+	tflint --init && \
+	tflint --recursive --config "$$(pwd)/.tflint.hcl" --format compact && \
+	echo
 
 .PHONY: validate
 validate:

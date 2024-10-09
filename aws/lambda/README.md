@@ -3,7 +3,7 @@
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | 1.5.5 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.5 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.0 |
 
 ## Providers
@@ -43,16 +43,14 @@
 | <a name="input_filename"></a> [filename](#input\_filename) | Path to the function's deployment package within the local filesystem | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Name for sources in the molecule | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to assign to resources | `map(string)` | n/a | yes |
-| <a name="input_cloudwatch"></a> [cloudwatch](#input\_cloudwatch) | Cloudwatch log group config | <pre>object({<br>    kms_key_id        = optional(string, null)<br>    retention_in_days = optional(number, 30)<br>  })</pre> | `{}` | no |
-| <a name="input_environment"></a> [environment](#input\_environment) | Environment variables config | `any` | `null` | no |
-| <a name="input_eventbridge_event_pattern"></a> [eventbridge\_event\_pattern](#input\_eventbridge\_event\_pattern) | Event patterns are complex and may need a CloudTrail trail to work | <pre>list(object({<br>    description   = string<br>    event_pattern = string<br>    name          = string<br>  }))</pre> | `[]` | no |
-| <a name="input_eventbridge_schedule_expression"></a> [eventbridge\_schedule\_expression](#input\_eventbridge\_schedule\_expression) | Expressions either are cron or rate based, see AWS docs for more | <pre>list(object({<br>    description         = string<br>    is_enabled          = optional(bool, true)<br>    name                = string<br>    schedule_expression = string<br>  }))</pre> | `[]` | no |
+| <a name="input_cloudwatch"></a> [cloudwatch](#input\_cloudwatch) | Cloudwatch log group config | <pre>object({<br/>    kms_key_id        = optional(string, null)<br/>    retention_in_days = optional(number, 30)<br/>  })</pre> | `{}` | no |
+| <a name="input_eventbridge_event_pattern"></a> [eventbridge\_event\_pattern](#input\_eventbridge\_event\_pattern) | Event patterns are complex and may need a CloudTrail trail to work | <pre>list(object({<br/>    description   = string<br/>    event_pattern = string<br/>    name          = string<br/>  }))</pre> | `[]` | no |
+| <a name="input_eventbridge_schedule_expression"></a> [eventbridge\_schedule\_expression](#input\_eventbridge\_schedule\_expression) | Expressions either are cron or rate based, see AWS docs for more | <pre>list(object({<br/>    description         = string<br/>    is_enabled          = optional(bool, true)<br/>    name                = string<br/>    schedule_expression = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_handler"></a> [handler](#input\_handler) | Function entrypoint in your code | `string` | `"lambda_handler"` | no |
 | <a name="input_layers"></a> [layers](#input\_layers) | List of Lambda Layer Version ARNs (maximum of 5) to attach to your Lambda Function | `list(string)` | `null` | no |
-| <a name="input_policies"></a> [policies](#input\_policies) | List of policy objects containing: descrition, name, and policy json. | <pre>list(object({<br>    description = string<br>    name        = string<br>    policy_json = string<br>  }))</pre> | `[]` | no |
+| <a name="input_policies"></a> [policies](#input\_policies) | List of policy objects containing: descrition, name, and policy json. | <pre>list(object({<br/>    description = string<br/>    name        = string<br/>    policy_json = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_runtime"></a> [runtime](#input\_runtime) | Identifier of the function's runtime | `string` | `"python3.9"` | no |
 | <a name="input_timeout"></a> [timeout](#input\_timeout) | Time in seconds until function stopped | `number` | `30` | no |
-| <a name="input_vpc_config"></a> [vpc\_config](#input\_vpc\_config) | For network connectivity to AWS resources in a VPC, specify a list of security groups and subnets in the VPC. | `any` | `null` | no |
 
 ## Outputs
 
