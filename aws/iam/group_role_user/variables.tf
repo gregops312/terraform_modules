@@ -9,7 +9,8 @@ variable "tags" {
 }
 
 variable "type" {
-  type = string
+  description = "The type of the resource to implement"
+  type        = string
   validation {
     condition     = contains(["group", "role", "user"], var.type)
     error_message = "Must be one of [group, role, user]."

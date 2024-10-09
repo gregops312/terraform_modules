@@ -52,6 +52,13 @@ resource "aws_iam_user_group_membership" "self" {
   groups = var.user.groups
 }
 
+resource "aws_iam_user_policy_attachment" "self" {
+  count = var.type == "user" ? length(local.policy_attachments) : 0
+
+  policy_arn = local.policy_attachments[count.index]
+  user       = one(aws_iam_user.self).name
+}
+
 resource "aws_iam_user" "self" {
   count = var.type == "user" ? 1 : 0
 
